@@ -6,6 +6,18 @@ export const fetchUser=createAsyncThunk("api/fetchUser",async(page)=>{
     const totalpage=wholeUserObject.total_pages;
     return {userArray:data,totalPage:totalpage};
 });
+export const editUser = createAsyncThunk("api/editUser", async ({ id, updatedData }) => {
+    const response = await fetch(`https://reqres.in/api/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+  
+    const data = await response.json();
+    return { id, ...updatedData };
+  });
 const initialState={
     users:[],
     loading:false,
@@ -20,6 +32,11 @@ const UserSlice=createSlice({
         builder.addCase(fetchUser.pending,(state,action)=>{
             state.loading=true
         })
+        builder.addCase(editUser.fulfilled, (state, { payload }) => {
+            state.users = state.users.map((user) =>
+              user.id === payload.id ? { ...user, ...payload } : user
+            );
+          });
     }
 
 })
