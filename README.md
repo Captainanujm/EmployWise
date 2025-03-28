@@ -1,12 +1,23 @@
 # React + Vite
+#Users Management App (React + Redux)
+This is a simple user management app built using React, Redux, and Redux Toolkit.It allows users to view, edit, and delete users while implementing authentication and pagination.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+How to run this Project-:
+Step-1: git clone https://github.com/Captainanujm/EmployWise
+Step-2: npm install
+Step-3: Click on the link populated i.e.localhost:3000
 
-Currently, two official plugins are available:
+#TECHNOLOGIES USED:-
+React.js
+Redux Toolkit
+React Router
+Tailwind CSS
+Fake API for fetching users
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#Known Issues & Considerations
 
-## Expanding the ESLint configuration
+Login Delay: After login, there may be a slight delay due to async state updates. If the screen does not change immediately, wait a second or refresh the page.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Pagination Limitations: If the API response is slow, the next page might take a moment to load.
+
+Mock Backend: The user data is fetched from a mock API, so edits and deletions are not persistent.
