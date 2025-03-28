@@ -18,6 +18,12 @@ export const editUser = createAsyncThunk("api/editUser", async ({ id, updatedDat
     const data = await response.json();
     return { id, ...updatedData };
   });
+  export const deleteUser = createAsyncThunk("api/deleteUser", async (id) => {
+    await fetch(`https://reqres.in/api/users/${id}`, {
+      method: "DELETE",
+    });
+  return id;
+  });
 const initialState={
     users:[],
     loading:false,
@@ -28,11 +34,15 @@ const UserSlice=createSlice({
     initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(fetchUser.fulfilled,(state,action)=>{state.users=action.payload.userArray;state.loading=false;state.totalPages=action.payload.totalPage});
+        builder.addCase(fetchUser.fulfilled,(state,action)=>{state.users=action.payload.userArray;
+            state.loading=false;state.totalPages=action.payload.totalPage});
         builder.addCase(fetchUser.pending,(state,action)=>{
             state.loading=true
         })
-        builder.addCase(editUser.fulfilled, (state, { payload }) => {
+        builder.addCase(deleteUser.fulfilled, (state, {payload}) => {
+            state.users = state.users.filter((user) => user.id !== payload);
+          });
+        builder.addCase(editUser.fulfilled, (state,{payload}) => {
             state.users = state.users.map((user) =>
               user.id === payload.id ? { ...user, ...payload } : user
             );

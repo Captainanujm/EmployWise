@@ -1,6 +1,6 @@
 import React, { useEffect,useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { fetchUser,editUser } from "../features/userSlice";
+import { fetchUser,editUser,deleteUser } from "../features/userSlice";
 import { logout } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
 const Users = () => {
@@ -13,7 +13,7 @@ const Users = () => {
     useEffect(()=>{
         dispatch(fetchUser(page));
     },[dispatch,page])
-    const handleEditClick = (user) => {
+    function handleEditClick (user) {
       setEditId(user.id);
       setFormData({
         first_name: user.first_name,
@@ -22,10 +22,13 @@ const Users = () => {
       });
     };
   
-    const handleSave = () => {
+    function handleEditClick(){
       dispatch(editUser({ id: editId, updatedData: formData }));
       setEditId(null);
-    };
+    }
+    const handleDelete = (id) => {
+      dispatch(deleteUser(id));
+    }
   return (
     <div className="p-4">
       <h2 className="text-2xl mb-4">Users</h2>
@@ -73,6 +76,12 @@ const Users = () => {
                       className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
                     >
                       Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user.id)}
+                      className="mt-2 ml-2 bg-red-500 text-white px-4 py-2 rounded"
+                    >
+                      Delete
                     </button>
                   </>
                 )}
